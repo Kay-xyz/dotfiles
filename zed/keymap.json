@@ -1,0 +1,108 @@
+// documentation: https://zed.dev/docs/key-bindings
+// To see the default key bindings run `zed: open default keymap`
+[
+    {
+        "context": "Workspace",
+        "bindings": {
+            "space e": "project_panel::Toggle",
+            "space r": ["projects::OpenRecent", { "create_new_window": false }],
+            "space space": "file_finder::Toggle",
+            "space i": "agent::Toggle",
+            "space w": "workspace::Save",
+            "space g": "git_panel::Toggle",
+            "ctrl-/": "terminal_panel::Toggle",
+            "z f": "outline_panel::Toggle",
+            "ctrl-h": "workspace::ActivatePaneLeft",
+            "ctrl-l": "workspace::ActivatePaneRight",
+            "ctrl-k": "workspace::ActivatePaneUp",
+            "ctrl-j": "workspace::ActivatePaneDown",
+        }
+    },
+
+    {
+        "context": "Editor && !menu",
+        "bindings": {
+            "ctrl-c": "editor::Copy",
+            "ctrl-v": "editor::Paste",
+            "ctrl-z": "editor::Undo",
+            "ctrl-/": "terminal_panel::Toggle",
+            "shift-escape":null,
+        }
+    },
+
+    {
+        "context": "Editor && vim_mode==normal",
+        "bindings": {
+            "q": "pane::CloseActiveItem",
+            "tab": "pane::ActivateNextItem",
+            "shift-tab": "pane::ActivatePreviousItem",
+            "ctrl-h": "workspace::ActivatePaneLeft",
+            "ctrl-l": "workspace::ActivatePaneRight",
+            "shift-j": "vim::ScrollDown",
+            "shift-k": "vim::ScrollUp",
+            "shift-h": "vim::FirstNonWhitespace",
+            "shift-l": "vim::EndOfLine",
+            "ctrl-k": "workspace::ActivatePaneUp",
+            "ctrl-j": "workspace::ActivatePaneDown",
+            "s": "vim::HelixJumpToWord",
+            "z f": "outline_panel::Toggle",
+            // "x": "vim::SelectNext"
+        }
+    },
+
+    {
+        "context": "Editor && vim_mode==visual",
+        "bindings": {
+          "shift-h": "vim::FirstNonWhitespace",
+          "shift-l": "vim::EndOfLine",
+            // "x": "vim::SelectNext"
+        }
+    },
+
+    {
+        "context": "ProjectPanel && not_editing",
+        "use_key_equivalents": true,
+        "bindings": {
+            "q": "project_panel::Toggle",
+            "r": "project_panel::Rename",
+            "a": "project_panel::NewFile",
+            "o": "project_panel::NewFile",
+            // "u": "projecepanel::Undo",
+            // "U": "project_panel::Redo",
+            "y": "project_panel::Copy",
+            "p": "project_panel::Paste",
+            "d": ["project_panel::Delete", { "skip_prompt": false }],
+            "escape": "project_panel::Toggle",
+        }
+    },
+
+    {
+      "context": "OutlinePanel && not_editing",
+      "use_key_equivalents": true,
+      "bindings": {
+        "escape": "outline_panel::Toggle",
+      },
+    },
+
+    {
+      "context": "Terminal",
+      "use_key_equivalents": true,
+      "bindings": {
+        "escape": "terminal_panel::Toggle",
+      },
+    },
+
+    {
+        "context": "Terminal || BufferSearchBar || ProjectSearchBar || FileFinder || (Editor && vim_mode==insert)",
+        "bindings": {
+            //fix space bug
+            "space space": null,
+            "space e": null,
+            "space r": null,
+            "space i": null,
+            "space w": null,
+            "space g": null,
+            "z f": null,
+        }
+    }
+]
