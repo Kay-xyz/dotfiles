@@ -4,6 +4,10 @@ vim.opt.fillchars = { eob = " " }
 vim.opt.cursorline=true
 vim.opt.clipboard = "unnamedplus"
 vim.opt.wrap = false
+vim.opt.expandtab = true    -- 关键：将 Tab 键输入转换为空格
+vim.opt.tabstop = 4         -- 一个 Tab 字符显示为 4 个空格宽度
+vim.opt.softtabstop = 4     -- 编辑时按 Tab 键，插入 4 个空格
+vim.opt.shiftwidth = 4      -- 自动缩进（>> 或 <<）时移动 4 个空格
 
 vim.keymap.set({ "n", "v" }, "H", "^", { desc = "行首" })
 vim.keymap.set({ "n", "v" }, "L", "$", { desc = "行尾" })
@@ -14,33 +18,10 @@ vim.keymap.set("n", "<Space>w", "<Cmd>write<CR>", { desc = "保存" })
 vim.keymap.set("n", "q", "<Cmd>bdelete<CR>", { desc = "关闭当前缓冲区" })
 vim.keymap.set('n', 'U', '<C-r>', { desc = 'Redo' })
 
-
--- 主题
--- 1. 安装（name 可省略，但建议保留以统一 require 路径）
 vim.pack.add({
-    "https://github.com/catppuccin/nvim",
+  'https://github.com/oneslash/helix-nvim',
 })
-
--- 2. 配置（可选）
-require("catppuccin").setup({
-    flavour = "mocha",              -- latte / frappe / macchiato / mocha
-    -- transparent_background = true,  -- 全局背景透明
-    color_overrides = {
-        mocha = {
-            base = "#16181d",
-            mantle = "#111317",
-            crust = "#131020",
-        },
-    },
-    float = {
-        transparent = true,         -- 浮动窗口透明
-    },
-    -- 注意：markdown、treesitter、native_lsp 等集成已默认内置，无需手动开启
-})
-
--- 3. 加载（注意名称变化！）
-vim.cmd.colorscheme("catppuccin-nvim")
-
+vim.cmd.colorscheme('helix')
 -- 自动pair
 vim.pack.add({ "https://github.com/nvim-mini/mini.pairs" })
 require("mini.pairs").setup()
@@ -113,7 +94,7 @@ vim.pack.add({
 
 require("nvim-tree").setup({
   view = {
-    width = 30,          -- 侧边栏宽度
+    width = 25,          -- 侧边栏宽度
     side = "left",       -- 位置：left / right
   },
   renderer = {
@@ -122,11 +103,25 @@ require("nvim-tree").setup({
   filters = {
     dotfiles = false,    -- 是否隐藏点文件
   },
+
+    on_attach = function(bufnr)
+    local api = require("nvim-tree.api")
+
+    local function opts(desc)
+      return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+    end
+
+    -- 先加载默认映射，再覆盖 h 和 l
+    api.config.mappings.default_on_attach(bufnr)
+
+    -- l 键：打开文件或展开文件夹
+    vim.keymap.set("n", "l", api.node.open.edit, opts("Open"))
+    -- h 键：关闭文件夹
+    vim.keymap.set("n", "h", api.node.navigate.parent_close, opts("Close"))
+  end,
 })
 
 vim.keymap.set("n", "<Space>e", "<Cmd>NvimTreeToggle<CR>", { desc = "开关文件树" })
-
-vim.lsp.enable('gopls')
 
 
 -- 1. 安装插件（bufferline 依赖 nvim-web-devicons 来显示图标）
@@ -139,8 +134,12 @@ vim.pack.add({
 require("bufferline").setup({
   options = {
     mode = "buffers",          -- 默认即是 buffers 模式，显示所有打开的缓冲区
+    indicator = {
+      style = "icon",  -- 可选值还有 "icon"（默认）、"none"
+    },
     separator_style = "thin",  -- 分隔符样式，可选 "thin", "thick", "slant"
-    show_buffer_close_icons = true,
+    show_buffer_icons = false,
+    show_buffer_close_icons = false,
     show_close_icon = false,
     diagnostics = "nvim_lsp",  -- 显示 LSP 诊断信息（错误/警告数量）
     offsets = {                -- 与 nvim-tree 的集成，避免顶栏被文件树遮挡
@@ -162,15 +161,20 @@ vim.pack.add({
 require('lualine').setup({
   options = {
     theme = 'auto', -- 或者直接写 'catppuccin'
+    section_separators = { left = '█', right = '█' },
+    component_separators = { left = '│', right = '│' },
     -- 你之前配的 Catppuccin 颜色应该会自动应用
+    disabled_filetypes = {
+        statusline = {"NvimTree"},  -- 删掉这里的 "NvimTree"
+    },
   },
   sections = {
-    lualine_a = {'mode'},
+    lualine_a = {},
     lualine_b = {},
-    lualine_c = {'filename','diagnostics'},
-    lualine_x = {'diff'},
-    lualine_y = {'lsp_status'},
-    lualine_z = {'branch'}
+    lualine_c = {'branch','filename','diagnostics'},
+    lualine_x = {'diff','lsp_status',"location"},
+    lualine_y = {},
+    lualine_z = {}
   },
 })
 
@@ -187,8 +191,14 @@ vim.pack.add({
 })
 
 -- 2. 构建模糊匹配器（必须）
-require('blink.cmp').build():pwait()
-
+vim.api.nvim_create_autocmd("PackChanged", {
+  callback = function(ev)
+    if ev.data.spec.name == "blink.cmp"
+       and (ev.data.kind == "install" or ev.data.kind == "update") then
+      vim.system({ "cargo", "build", "--release" }, { cwd = ev.data.path }):wait()
+    end
+  end,
+})
 -- 3. 配置
 require('blink.cmp').setup({
     keymap = { preset = 'enter' }, -- 或 'super-tab' 让 Tab 键接受补全
@@ -232,6 +242,4 @@ vim.api.nvim_create_autocmd('BufWritePre', {
     vim.lsp.buf.format()
   end,
 })
-
-
 
