@@ -3,6 +3,7 @@ vim.opt.relativenumber=true
 vim.opt.fillchars = { eob = " " }
 vim.opt.cursorline=true
 vim.opt.clipboard = "unnamedplus"
+vim.opt.wrap = false
 
 vim.keymap.set({ "n", "v" }, "H", "^", { desc = "行首" })
 vim.keymap.set({ "n", "v" }, "L", "$", { desc = "行尾" })
@@ -11,6 +12,7 @@ vim.keymap.set({ "n", "v" }, "K", "<C-u>", { desc = "向上翻页" })
 vim.keymap.set("n", "<Esc>", "<CMD>nohlsearch<CR><Esc>", { desc = "去除高亮" })
 vim.keymap.set("n", "<Space>w", "<Cmd>write<CR>", { desc = "保存" })
 vim.keymap.set("n", "q", "<Cmd>bdelete<CR>", { desc = "关闭当前缓冲区" })
+vim.keymap.set('n', 'U', '<C-r>', { desc = 'Redo' })
 
 
 -- 主题
@@ -22,7 +24,14 @@ vim.pack.add({
 -- 2. 配置（可选）
 require("catppuccin").setup({
     flavour = "mocha",              -- latte / frappe / macchiato / mocha
-    transparent_background = false,  -- 全局背景透明
+    -- transparent_background = true,  -- 全局背景透明
+    color_overrides = {
+        mocha = {
+            base = "#16181d",
+            mantle = "#111317",
+            crust = "#131020",
+        },
+    },
     float = {
         transparent = true,         -- 浮动窗口透明
     },
@@ -162,9 +171,45 @@ require('blink.cmp').build():pwait()
 
 -- 3. 配置
 require('blink.cmp').setup({
-    keymap = { preset = 'default' }, -- 或 'super-tab' 让 Tab 键接受补全
+    keymap = { preset = 'enter' }, -- 或 'super-tab' 让 Tab 键接受补全
     appearance = { nerd_font_variant = 'mono' },
     sources = { default = { 'lsp', 'path', 'snippets', 'buffer' } },
     -- 默认使用 Rust 匹配器；若无 Rust 环境可改为 "lua"
     fuzzy = { implementation = "prefer_rust" },
 })
+
+
+-- 安装官方 Zig 语法高亮插件（Codeberg 源）
+vim.pack.add({
+  'https://codeberg.org/ziglang/zig.vim',
+})
+
+-- 关闭 zig.vim 自带的保存时格式化（后面统一交给 ZLS 处理）
+vim.g.zig_fmt_autosave = 0
+vim.g.zig_fmt_parse_errors = 0
+
+-- 配置 zls 客户端
+vim.lsp.config['zls'] = {
+  -- 如果 zls 不在 PATH 中，把 'zls' 换成 zls 可执行文件的绝对路径
+  cmd = { 'zls' },
+  filetypes = { 'zig', 'zon' },
+  -- ZLS 通过项目根目录的 build.zig 来识别工作区
+  root_markers = { 'build.zig' },
+  settings = {
+    zls = {
+      -- 如果你把 zig 编译器放在了非标准路径，在这里指定
+      -- zig_exe_path = '/path/to/zig',
+    },
+  },
+}
+
+-- 针对 zig 文件启用 zls
+vim.lsp.enable('zls')
+
+vim.api.nvim_create_autocmd('BufWritePre', {
+  pattern = { '*.zig', '*.zon' },
+  callback = function()
+    vim.lsp.buf.format()
+  end,
+})
+
