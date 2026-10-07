@@ -1,5 +1,5 @@
 vim.opt.number =true
-vim.opt.relativenumber=true
+vim.opt.relativenumber=false
 vim.opt.fillchars = { eob = " " }
 vim.opt.cursorline=true
 vim.opt.clipboard = "unnamedplus"
@@ -154,6 +154,26 @@ require("bufferline").setup({
   },
 })
 
+vim.pack.add({
+  'https://github.com/nvim-lualine/lualine.nvim',
+  -- 如果你想让状态栏显示图标，建议同时装上这个：
+  'https://github.com/nvim-tree/nvim-web-devicons',
+})
+require('lualine').setup({
+  options = {
+    theme = 'auto', -- 或者直接写 'catppuccin'
+    -- 你之前配的 Catppuccin 颜色应该会自动应用
+  },
+  sections = {
+    lualine_a = {'mode'},
+    lualine_b = {},
+    lualine_c = {'filename','diagnostics'},
+    lualine_x = {'diff'},
+    lualine_y = {'lsp_status'},
+    lualine_z = {'branch'}
+  },
+})
+
 vim.keymap.set("n", "<Tab>", "<Cmd>BufferLineCycleNext<CR>", { desc = "下一个缓冲区" })
 vim.keymap.set("n", "<S-Tab>", "<Cmd>BufferLineCyclePrev<CR>", { desc = "上一个缓冲区" })
 
@@ -212,4 +232,6 @@ vim.api.nvim_create_autocmd('BufWritePre', {
     vim.lsp.buf.format()
   end,
 })
+
+
 
