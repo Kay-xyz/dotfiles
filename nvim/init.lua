@@ -1,7 +1,7 @@
 vim.opt.number =true
 vim.opt.relativenumber=false
 vim.opt.fillchars = { eob = " " }
--- vim.opt.cursorline=true
+vim.opt.cursorline=true
 vim.opt.clipboard = "unnamedplus"
 vim.opt.wrap = false
 vim.opt.expandtab = true    -- 关键：将 Tab 键输入转换为空格
