@@ -16,6 +16,7 @@
             "ctrl-l": "workspace::ActivatePaneRight",
             "ctrl-k": "workspace::ActivatePaneUp",
             "ctrl-j": "workspace::ActivatePaneDown",
+            "shift-escape":null,
         }
     },
 
@@ -34,14 +35,14 @@
         "context": "Editor && vim_mode==normal",
         "bindings": {
             "q": "pane::CloseActiveItem",
-            "tab": "pane::ActivateNextItem",
-            "shift-tab": "pane::ActivatePreviousItem",
+            "shift-l": "pane::ActivateNextItem",
+            "shift-h": "pane::ActivatePreviousItem",
             "ctrl-h": "workspace::ActivatePaneLeft",
             "ctrl-l": "workspace::ActivatePaneRight",
             "shift-j": "vim::ScrollDown",
             "shift-k": "vim::ScrollUp",
-            "shift-h": "vim::FirstNonWhitespace",
-            "shift-l": "vim::EndOfLine",
+            "g h": "vim::FirstNonWhitespace",
+            "g l": "vim::EndOfLine",
             "ctrl-k": "workspace::ActivatePaneUp",
             "ctrl-j": "workspace::ActivatePaneDown",
             "s": "vim::HelixJumpToWord",
@@ -51,10 +52,10 @@
     },
 
     {
-        "context": "Editor && vim_mode==visual",
+        "context": "editor && vim_mode==visual",
         "bindings": {
-          "shift-h": "vim::FirstNonWhitespace",
-          "shift-l": "vim::EndOfLine",
+          "g h": "vim::FirstNonWhitespace",
+          "g l": "vim::EndOfLine",
             // "x": "vim::SelectNext"
         }
     },
