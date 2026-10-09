@@ -11,6 +11,7 @@ vim.pack.add({
 
 require("neo-tree").setup({
 	window = {
+		width = 25,
 		mappings = {
 			["l"] = "open", -- 打开文件或展开目录
 			["h"] = "close_node", -- 折叠目录
