@@ -21,14 +21,11 @@ end
 
 require("lualine").setup({
 	options = {
+		globalstatus = true,
 		-- 去掉 section 之间的三角分隔符，组件之间用竖线分割
 		section_separators = "",
 		component_separators = { left = "|", right = "|" },
 		-- 文件树窗口不显示状态栏
-		disabled_filetypes = {
-			statusline = { "NvimTree", "neo-tree" },
-		},
-		ignore_focus = { "NvimTree", "neo-tree" },
 	},
 	sections = {
 		lualine_a = { "branch" },
