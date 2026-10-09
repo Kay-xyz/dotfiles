@@ -4,3 +4,4 @@ vim.pack.add({
 })
 vim.cmd.colorscheme("helix")
 vim.api.nvim_set_hl(0, "MatchParen", { fg = "#ffffff", bg = "#6c6999" })
+vim.api.nvim_set_hl(0, "StatusLine", { fg = "#ffffff", bg = "#281733" })
