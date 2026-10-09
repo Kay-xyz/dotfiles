@@ -31,7 +31,11 @@ require("lualine").setup({
 		ignore_focus = { "NvimTree", "neo-tree" },
 	},
 	sections = {
-		lualine_x = { { lsp_status } },
+		lualine_a = { "branch" },
+		lualine_b = {},
+		lualine_c = { "filename", "diff", "diagnostics" },
+		lualine_x = { { "lsp_status" } },
 		lualine_y = {},
+		lualine_z = {},
 	},
 })
