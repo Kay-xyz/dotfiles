@@ -8,9 +8,17 @@
       "rev": "fd9a48ebbe6ec30d5dfcc5b42c243941ccdca1aa",
       "src": "https://github.com/saghen/blink.lib"
     },
+    "bufferchad.nvim": {
+      "rev": "6beaec58b415d76156f9e78e756f72dad3cbf05e",
+      "src": "https://github.com/mrquantumcodes/bufferchad.nvim"
+    },
     "bufferline.nvim": {
       "rev": "655133c3b4c3e5e05ec549b9f8cc2894ac6f51b3",
       "src": "https://github.com/akinsho/bufferline.nvim"
+    },
+    "buffers.nvim": {
+      "rev": "d4202d1d881a355de43d5b857dddb21252662535",
+      "src": "https://github.com/lkusiani/buffers.nvim"
     },
     "conform.nvim": {
       "rev": "016802de402556da54c36bd7359b441266b01cdd",
