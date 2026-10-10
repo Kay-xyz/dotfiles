@@ -93,7 +93,7 @@ vim.lsp.config("*", {
 		map("n", "gr", vim.lsp.buf.references, "跳转到引用")
 		map("n", "gD", vim.lsp.buf.declaration, "跳转到声明")
 		map("n", "gI", vim.lsp.buf.implementation, "跳转到实现")
-		map("n", "<spece>k", vim.lsp.buf.hover, "悬停文档")
+		map("n", "<space>k", vim.lsp.buf.hover, "悬停文档")
 		map("n", "<leader>rn", vim.lsp.buf.rename, "重命名")
 		map("n", "<leader>ca", vim.lsp.buf.code_action, "代码操作")
 	end,
