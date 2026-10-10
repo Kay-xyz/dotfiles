@@ -22,6 +22,12 @@ require("toggleterm").setup({
 	direction = "float",
 	close_on_exit = true,
 	shell = vim.o.shell,
+	-- 终端打开时按 Esc 折叠（关闭）终端
+	on_open = function(term)
+		vim.keymap.set({ "t", "n" }, "<Esc>", function()
+			term:close()
+		end, { buffer = term.bufnr, desc = "折叠终端" })
+	end,
 	float_opts = {
 		border = "curved",
 		winblend = 0,
@@ -46,7 +52,8 @@ function _node_toggle()
 end
 
 -- 关键词优先级：float、horizontal、vertical
-vim.keymap.set("n", "<Space>tf", "<Cmd>ToggleTerm direction=float<CR>", { desc = "浮动终端" })
+vim.keymap.set("n", "<Space>tt", "<Cmd>ToggleTerm direction=float<CR>", { desc = "浮动终端" })
+vim.keymap.set("n", "<C-_>", "<Cmd>ToggleTerm direction=float<CR>", { desc = "浮动终端" })
 vim.keymap.set("n", "<Space>th", "<Cmd>ToggleTerm direction=horizontal size=15<CR>", { desc = "横向终端" })
 vim.keymap.set("n", "<Space>tv", "<Cmd>ToggleTerm direction=vertical size=80<CR>", { desc = "纵向终端" })
 vim.keymap.set("n", "<Space>tg", "<Cmd>lua _lazygit_toggle()<CR>", { desc = "切换 lazygit" })
