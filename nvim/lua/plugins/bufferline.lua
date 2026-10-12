@@ -19,17 +19,9 @@ require("bufferline").setup({
 			{
 				filetype = "neo-tree",
 				text = "File Explorer",
-				highlight = "Directory",
+				-- highlight = "Directory",
 				separator = true,
 			},
 		},
-	}, -- ← 关 options
-}) -- ← 关 setup
-
-require("bufferline").setup({ ... })
-
-vim.api.nvim_set_hl(0, "BufferLineBufferSelected", {
-	fg = "#A4A0E8",
-	bg = "#281733",
-	bold = true,
+	},
 })
