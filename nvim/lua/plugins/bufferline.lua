@@ -5,7 +5,7 @@ vim.pack.add({
 })
 
 require("bufferline").setup({
-	options = { -- ← options 与 highlights 平级
+	options = {
 		mode = "buffers", -- 默认即是 buffers 模式，显示所有打开的缓冲区
 		indicator = {
 			style = "icon", -- 可选值还有 "icon"（默认）、"none"
@@ -19,7 +19,7 @@ require("bufferline").setup({
 			{
 				filetype = "neo-tree",
 				text = "File Explorer",
-				-- highlight = "Directory",
+				highlight = "Directory",
 				separator = true,
 			},
 		},
