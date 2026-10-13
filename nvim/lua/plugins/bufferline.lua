@@ -14,7 +14,7 @@ require("bufferline").setup({
 		show_buffer_icons = false,
 		show_buffer_close_icons = false,
 		show_close_icon = false,
-		diagnostics = "nvim_lsp", -- 显示 LSP 诊断信息（错误/警告数量）
+		-- diagnostics = "nvim_lsp", -- 显示 LSP 诊断信息（错误/警告数量）
 		offsets = { -- 与 neo-tree 的集成，避免顶栏被文件树遮挡
 			{
 				filetype = "neo-tree",

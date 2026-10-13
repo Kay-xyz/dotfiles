@@ -18,3 +18,8 @@ vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "切换到左侧窗口" })
 vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "切换到下方窗口" })
 vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "切换到上方窗口" })
 vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "切换到右侧窗口" })
+
+-- 普通模式下 Ctrl-C 复制到系统剪贴板
+vim.keymap.set({ "n", "v" }, "<C-c>", '"+y', { desc = "复制到系统剪贴板" })
+-- 普通模式下 Ctrl-V 从系统剪贴板粘贴
+vim.keymap.set({ "n", "v" }, "<C-v>", '"+p', { desc = "从系统剪贴板粘贴" })

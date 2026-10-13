@@ -1,7 +1,6 @@
 -- 基础设置
 require("config.options")
 require("config.keymaps")
-require("config.colorscheme")
 
 -- 插件配置
 require("plugins.lspconfig")
@@ -15,3 +14,4 @@ require("plugins.bufferline")
 require("plugins.lualine")
 require("plugins.aerial")
 require("plugins.toggleterm")
+require("config.colorscheme")

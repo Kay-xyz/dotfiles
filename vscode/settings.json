@@ -1,0 +1,155 @@
+{
+  "workbench.startupEditor": "none",
+  "explorer.confirmDragAndDrop": true,
+  "explorer.confirmDelete": false,
+  "explorer.confirmPasteNative": false,
+  "editor.formatOnSave": true,
+  "git.autofetch": true,
+  "git.confirmSync": false,
+  "git.enableSmartCommit": true,
+  "terminal.integrated.stickyScroll.enabled": false,
+  "go.toolsManagement.autoUpdate": true,
+  "editor.minimap.enabled": false,
+  "github.copilot.enable": {
+    "*": false,
+    "plaintext": false,
+    "markdown": false,
+    "scminput": false,
+    "go": false
+  },
+  "glassit.alpha": 220,
+  "workbench.editorLargeFileConfirmation": 20,
+  "makefile.configureOnOpen": true,
+  "chatgpt.localeOverride": "zh-CN",
+  "workbench.editor.empty.hint": "hidden",
+  "chat.disableAIFeatures": true,
+  "window.menuBarVisibility": "toggle",
+  "liveServer.settings.donotShowInfoMsg": true,
+  "liveServer.settings.donotVerifyTags": true,
+  "workbench.layoutControl.enabled": false,
+  "workbench .colorTheme": "Everforest Pro Dark Vibrant",
+  "vim.useSystemClipboard": true,
+  "vim.incsearch": true,
+  "vim.useCtrlKeys": true,
+  "vim.handleKeys": {
+    "<C-a>": false,
+    "<C-c>": false,
+    "<C-z>": false
+  },
+  // ========== Flash-VSCode 视觉优化 ==========
+  // 暗色透明度（被遮挡部分的暗化程度）
+  "flash-vscode.dimOpacity": "0.65", // 从 0.65 降低到 0.4，让背景更清晰
+  // 匹配高亮颜色（改为更柔和、护眼的蓝色）
+  "flash-vscode.matchColor": "#7aa2f7", // 柔和的亮蓝色（适合暗色主题）
+  // 匹配文本字重
+  "flash-vscode.matchFontWeight": "bold",
+  // 标签文字颜色（白色保持清晰）
+  "flash-vscode.labelColor": "#ffffff",
+  // 标签背景色（改为醒目但不刺眼的珊瑚粉）
+  "flash-vscode.labelBackgroundColor": "#f7768e", // 暖珊瑚粉，更柔和
+  // 问号模式标签背景色（用于跳转到确认）
+  "flash-vscode.labelQuestionBackgroundColor": "#7aa2f7", // 与 matchColor 呼应
+  // 标签字重
+  "flash-vscode.labelFontWeight": "bold",
+  "flash-vscode.labelKeys": "jklasdf;qweruiopzxcvnm,.ghtybABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+[]{}|;:'\",.<>/?",
+  "vim.showMarksInGutter": true,
+  "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "before": ["g", "d"],
+      "commands": ["editor.action.revealDefinition"]
+    },
+    {
+      "before": ["K"],
+      "commands": ["editor.action.showHover"]
+    },
+    {
+      "before": ["g", "r"],
+      "commands": ["editor.action.goToReferences"]
+    },
+    {
+      "before": ["<C-o>"],
+      "commands": ["workbench.action.navigateBack"]
+    },
+    // 新增：Ctrl+I 跳到更近的位置（Vim 风格）
+    {
+      "before": ["<C-i>"],
+      "commands": ["workbench.action.navigateForward"]
+    },
+    {
+      "before": ["c"],
+      "after": ["\"", "_", "c"]
+    },
+    {
+      "before": ["g", "h"],
+      "commands": ["cursorHome"]
+    },
+    {
+      "before": ["g", "l"],
+      "commands": ["cursorEnd"]
+    },
+    {
+      "before": ["<Space>", "<Space>"],
+      "commands": ["workbench.action.quickOpen"]
+    },
+    // 新增：保存文件
+    {
+      "before": ["<Space>", "w"],
+      "commands": ["workbench.action.files.save"]
+    },
+    // 新增：切换 buffer
+    {
+      "before": ["H"],
+      "commands": ["workbench.action.previousEditor"]
+    },
+    {
+      "before": ["L"],
+      "commands": ["workbench.action.nextEditor"]
+    },
+    {
+      "before": ["U"],
+      "commands": [":redo"]
+    },
+    {
+      "before": ["q"],
+      "commands": ["workbench.action.closeActiveEditor"]
+    },
+    {
+      "before": ["s"],
+      "commands": ["flash-vscode.start"]
+    },
+    {
+      "before": ["S"],
+      "commands": ["flash-vscode.startSelection"]
+    },
+    {
+      "before": ["t"],
+      "commands": ["flash-vscode.jump.treesitterSelection"]
+    },
+    {
+      "before": ["T"],
+      "commands": ["flash-vscode.remoteTreesitterSelection"]
+    },
+    {
+      "before": ["<BS>"],
+      "commands": ["flash-vscode.backspace"]
+    },
+    {
+      "before": ["<Esc>"],
+      "commands": ["flash-vscode.exit"]
+    }
+  ],
+  "vim.visualModeKeyBindingsNonRecursive": [
+    {
+      "before": ["c"],
+      "after": ["\"", "_", "c"]
+    }
+  ],
+  "editor.occurrencesHighlight": "multiFile",
+  "workbench.activityBar.compact": true,
+  "workbench.colorTheme": "Everforest Pro Dark Vibrant",
+  "editor.fontSize": 17,
+  "workbench.activityBar.location": "top",
+  "editor.lineNumbers": "relative",
+  "vim.smartRelativeLine": true,
+  "files.autoSave": "afterDelay"
+}
