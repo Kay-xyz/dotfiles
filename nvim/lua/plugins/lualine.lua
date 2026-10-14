@@ -30,8 +30,14 @@ require("lualine").setup({
 	sections = {
 		lualine_a = { "branch" },
 		lualine_b = {},
-		lualine_c = { "filename", "diff", "diagnostics" },
-		lualine_x = { { "lsp_status" } },
+		lualine_c = {
+			"filename",
+			"diff",
+			-- 错误图标颜色在这里单独指定：lualine 在 setup 时就把颜色固化了，
+			-- 不会跟着 colorscheme.lua 里的 DiagnosticError 走
+			{ "diagnostics", diagnostics_color = { error = { fg = "#ff5555" } } },
+		},
+		lualine_x = { lsp_status },
 		lualine_y = {},
 		lualine_z = {},
 	},

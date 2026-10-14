@@ -1,11 +1,6 @@
--- 基础设置
-require("config.options")
-require("config.keymaps")
-
--- 插件配置
-require("plugins.lspconfig")
+require("options")
+require("keymaps")
 require("plugins.blink-cmp")
-require("plugins.conform")
 require("plugins.mini-pairs")
 require("plugins.flash")
 require("plugins.telescope")
@@ -14,4 +9,5 @@ require("plugins.bufferline")
 require("plugins.lualine")
 require("plugins.aerial")
 require("plugins.toggleterm")
-require("config.colorscheme")
+require("plugins.colorscheme")
+require("plugins.lsp")
