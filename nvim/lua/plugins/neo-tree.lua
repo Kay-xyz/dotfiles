@@ -17,6 +17,22 @@ require("neo-tree").setup({
 			["h"] = "close_node", -- 折叠目录
 		},
 	},
+	default_component_configs = {
+		git_status = {
+			symbols = {
+				-- 只显示「是否被修改过」：modified 显示 +，其余状态一律不显示符号
+				added     = "",
+				deleted   = "",
+				modified  = "+",
+				renamed   = "",
+				untracked = "",
+				ignored   = "",
+				unstaged  = "",
+				staged    = "",
+				conflict  = "",
+			},
+		},
+	},
 })
 
-vim.keymap.set("n", "<Space>e", "<Cmd>Neotree toggle<CR>", { desc = "开关文件树" })
+vim.keymap.set("n", "<leader>e", "<Cmd>Neotree toggle<CR>", { desc = "开关文件树" })

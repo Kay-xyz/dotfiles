@@ -1,59 +1,32 @@
--- toggleterm.nvim：终端切换
+-- toggleterm.nvim：终端切换（只使用浮动模式）
 vim.pack.add({
 	"https://github.com/akinsho/toggleterm.nvim",
 })
 
 require("toggleterm").setup({
-	size = function(term)
-		if term.direction == "float" then
-			return 15
-		elseif term.direction == "vertical" then
-			return vim.o.columns * 0.4
-		end
-	end,
+	-- 全局快捷键：<C-\>，普通 / 插入 / 终端三种模式都能切换
+	-- （insert_mappings 让它进插入模式，terminal_mappings 默认开启让它进终端模式）
 	open_mapping = [[<C-\>]],
+	direction = "float",
 	hide_numbers = true,
-	shade_filetypes = {},
-	shade_terminals = true,
-	shading_factor = 2,
+	-- 终端背景不遮暗，和编辑器同色；想区分开就改成 shade_terminals = true（默认 shading_factor = -30）
+	shade_terminals = false,
 	start_in_insert = true,
 	insert_mappings = true,
 	persist_size = true,
-	direction = "float",
 	close_on_exit = true,
 	shell = vim.o.shell,
-	-- 终端打开时按 Esc 折叠（关闭）终端
-	on_open = function(term)
-		vim.keymap.set({ "t", "n" }, "<Esc>", function()
-			term:close()
-		end, { buffer = term.bufnr, desc = "折叠终端" })
-	end,
 	float_opts = {
 		border = "curved",
 		winblend = 0,
-		highlights = {
-			border = "Normal",
-			background = "Normal",
-		},
+		width = function()
+			return math.ceil(vim.o.columns * 0.85)
+		end,
+		height = function()
+			return math.ceil(vim.o.lines * 0.8)
+		end,
 	},
 })
 
-local Terminal = require("toggleterm.terminal").Terminal
-local lazygit = Terminal:new({ cmd = "lazygit", hidden = true, direction = "float" })
-
-function _lazygit_toggle()
-	lazygit:toggle()
-end
-
-local node = Terminal:new({ cmd = "node", hidden = true, direction = "float" })
-
-function _node_toggle()
-	node:toggle()
-end
-
--- 关键词优先级：float、horizontal、vertical
-vim.keymap.set("n", "<Space>tt", "<Cmd>ToggleTerm direction=float<CR>", { desc = "浮动终端" })
-vim.keymap.set("n", "<C-_>", "<Cmd>ToggleTerm direction=float<CR>", { desc = "浮动终端" })
-vim.keymap.set("n", "<Space>th", "<Cmd>ToggleTerm direction=horizontal size=15<CR>", { desc = "横向终端" })
-vim.keymap.set("n", "<Space>tv", "<Cmd>ToggleTerm direction=vertical size=80<CR>", { desc = "纵向终端" })
-vim.keymap.set("n", "<Space>tg", "<Cmd>lua _lazygit_toggle()<CR>", { desc = "切换 lazygit" })
+-- normal 模式下的顺手键：单键 <Space>t，比 <Space>tt 更好按
+vim.keymap.set("n", "<Space>t", "<Cmd>ToggleTerm<CR>", { desc = "浮动终端" })

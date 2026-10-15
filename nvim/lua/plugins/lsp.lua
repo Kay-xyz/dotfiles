@@ -51,7 +51,7 @@ vim.lsp.config['gopls'] = {
     end,
 }
 
--- Zig：需要 zls 在 PATH 中（当前系统只装了 zig 编译器，zls 需另行安装）
+-- Zig：zls 已通过 mason 安装，PATH 在 options.lua 里已统一补上
 vim.lsp.config['zls'] = {
     cmd = { 'zls' },
     filetypes = { 'zig', 'zir' },
@@ -91,16 +91,5 @@ vim.diagnostic.config({
     },
 })
 
--- 保存时格式化：只在当前缓冲区确实有支持格式化的 LSP 客户端时才调用，
--- 否则 vim.lsp.buf.format 会在没有 formatter 的文件上保存时报错。
-vim.api.nvim_create_autocmd("BufWritePre", {
-    callback = function(args)
-        local clients = vim.lsp.get_clients({
-            bufnr = args.buf,
-            method = 'textDocument/formatting',
-        })
-        if #clients > 0 then
-            vim.lsp.buf.format({ bufnr = args.buf, async = false })
-        end
-    end,
-})
+-- 保存时格式化已交给 conform.nvim（plugins/conform.lua）统一管理，
+-- 这里不再单独注册 BufWritePre，避免双重格式化。
