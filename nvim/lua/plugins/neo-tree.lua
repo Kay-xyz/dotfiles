@@ -10,6 +10,10 @@ vim.pack.add({
 })
 
 require("neo-tree").setup({
+	filesystem = {
+		-- 不劫持 netrw：用 nvim . 打开目录时交给 telescope（见 telescope.lua）
+		hijack_netrw_behavior = "disabled",
+	},
 	window = {
 		width = 25,
 		mappings = {
