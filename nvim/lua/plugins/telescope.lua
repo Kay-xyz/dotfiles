@@ -63,6 +63,9 @@ vim.api.nvim_create_autocmd("BufEnter", {
 	end,
 })
 vim.keymap.set('n', '<space>/', builtin.live_grep, { desc = '全局搜索文件内容' })
+vim.keymap.set("n", "<Space>d", function()
+	builtin.diagnostics({ bufnr = nil }) -- bufnr = nil：搜索所有缓冲区的诊断
+end, { desc = "搜索错误/警告（LSP 诊断）" })
 
 -- git 改动文件列表：Tab / Shift-Tab 多选，Enter 一次打开所有选中项（没多选就打开当前项）
 -- 注意：git_status 默认把 Tab 绑成「暂存/取消暂存」，这里覆盖回多选；

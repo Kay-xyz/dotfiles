@@ -31,7 +31,7 @@ require("lualine").setup({
 		lualine_a = { "branch" },
 		lualine_b = {},
 		lualine_c = {
-			"filename",
+			{ "filename", path = 4 }, -- 显示为「上级文件夹/文件名」
 			"diff",
 			-- 错误图标颜色在这里单独指定：lualine 在 setup 时就把颜色固化了，
 			-- 不会跟着 colorscheme.lua 里的 DiagnosticError 走

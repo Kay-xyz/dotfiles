@@ -93,3 +93,68 @@ vim.diagnostic.config({
 
 -- 保存时格式化已交给 conform.nvim（plugins/conform.lua）统一管理，
 -- 这里不再单独注册 BufWritePre，避免双重格式化。
+
+-- 复制代码错误/警告提示到系统剪贴板
+-- 格式：文件:行:列: 级别: 消息 [来源] (错误码)
+-- <leader>cd 复制光标所在行的诊断，<leader>cD 复制整个文件的诊断
+local severity_names = {
+    [vim.diagnostic.severity.ERROR] = 'Error',
+    [vim.diagnostic.severity.WARN] = 'Warning',
+    [vim.diagnostic.severity.INFO] = 'Info',
+    [vim.diagnostic.severity.HINT] = 'Hint',
+}
+
+local function format_diagnostic(d)
+    local file = vim.api.nvim_buf_get_name(d.bufnr)
+    local severity = severity_names[d.severity] or 'Unknown'
+    local source = d.source and (' [' .. d.source .. ']') or ''
+    local code = d.code and (' (' .. tostring(d.code) .. ')') or ''
+    return string.format('%s:%d:%d: %s: %s%s%s', file, d.lnum + 1, d.col + 1, severity, d.message, source, code)
+end
+
+local function copy_diagnostics(scope)
+    local bufnr = vim.api.nvim_get_current_buf()
+    local opts = {}
+    if scope == 'line' then
+        opts.lnum = vim.api.nvim_win_get_cursor(0)[1] - 1
+    end
+
+    local diags = vim.diagnostic.get(bufnr, opts)
+    if #diags == 0 then
+        vim.notify(scope == 'line' and '当前行没有诊断信息' or '当前文件没有诊断信息', vim.log.levels.INFO)
+        return
+    end
+
+    table.sort(diags, function(a, b)
+        if a.lnum ~= b.lnum then
+            return a.lnum < b.lnum
+        end
+        return a.col < b.col
+    end)
+
+    local lines = {}
+    for _, d in ipairs(diags) do
+        table.insert(lines, format_diagnostic(d))
+    end
+    local text = table.concat(lines, '\n')
+
+    vim.fn.setreg('+', text)
+    vim.fn.setreg('"', text)
+    vim.notify('已复制 ' .. #diags .. ' 条诊断信息', vim.log.levels.INFO)
+end
+
+vim.api.nvim_create_user_command('CopyLineDiagnostics', function()
+    copy_diagnostics('line')
+end, { desc = '复制当前行的诊断信息' })
+
+vim.api.nvim_create_user_command('CopyDiagnostics', function()
+    copy_diagnostics('buffer')
+end, { desc = '复制当前文件的诊断信息' })
+
+vim.keymap.set('n', '<leader>cd', function()
+    copy_diagnostics('line')
+end, { desc = '复制本行错误提示' })
+
+vim.keymap.set('n', '<leader>cD', function()
+    copy_diagnostics('buffer')
+end, { desc = '复制整个文件的错误提示' })
