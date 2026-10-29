@@ -2,9 +2,6 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
--- mason 装的 LSP / formatter 不在系统 PATH，统一补上（放在最前，确保后续所有插件都能找到）
-vim.env.PATH = vim.fn.stdpath("data") .. "/mason/bin:" .. vim.env.PATH
-
 local opt = vim.opt
 
 opt.number = true
