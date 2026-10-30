@@ -26,6 +26,28 @@ require("telescope").setup({
         },
     },
 })
+
+-- 兜底：如果 libfzf.so 不在（例如 pack 重新同步过），启动时自动 make 一次
+local function ensure_fzf_native()
+    local ok, fzf_lib = pcall(require, "fzf_lib")
+    if ok and fzf_lib and fzf_lib.libfzf then
+        return
+    end
+
+    local dirs = {
+        vim.fn.stdpath("data") .. "/site/pack/core/opt/telescope-fzf-native.nvim",
+        vim.fn.stdpath("data") .. "/site/pack/core/start/telescope-fzf-native.nvim",
+    }
+    for _, dir in ipairs(dirs) do
+        if vim.uv.fs_stat(dir) then
+            vim.system({ "make" }, { cwd = dir }):wait()
+            return
+        end
+    end
+end
+
+ensure_fzf_native()
+
 require("telescope").load_extension("fzf")
 
 local builtin = require("telescope.builtin")
