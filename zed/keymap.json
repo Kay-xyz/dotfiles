@@ -1,5 +1,3 @@
-// documentation: https://zed.dev/docs/key-bindings
-// To see the default key bindings run `zed: open default keymap`
 [
     {
         "context": "Workspace",
@@ -10,7 +8,7 @@
             "space i": "agent::Toggle",
             "space w": "workspace::Save",
             "space g": "git_panel::Toggle",
-            "ctrl-/": "terminal_panel::Toggle",
+            "ctrl-\\": "terminal_panel::Toggle",
             "z f": "outline_panel::Toggle",
             "ctrl-h": "workspace::ActivatePaneLeft",
             "ctrl-l": "workspace::ActivatePaneRight",
@@ -26,7 +24,7 @@
             "ctrl-c": "editor::Copy",
             "ctrl-v": "editor::Paste",
             "ctrl-z": "editor::Undo",
-            "ctrl-/": "terminal_panel::Toggle",
+            "ctrl-\\": "terminal_panel::Toggle",
             "shift-escape":null,
         }
     },
@@ -90,6 +88,15 @@
       "use_key_equivalents": true,
       "bindings": {
         "escape": "terminal_panel::Toggle",
+        "ctrl-l":null,
+      },
+    },
+
+    {
+      "context": "GitPanel",
+      "use_key_equivalents": true,
+      "bindings": {
+        "escape": "git_panel::Toggle",
       },
     },
 
